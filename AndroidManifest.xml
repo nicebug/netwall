@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+      package="org.nice.droidwall"
+      android:versionCode="100" android:versionName="1.0.0">
+    <uses-sdk android:minSdkVersion="3" android:targetSdkVersion="9"></uses-sdk>
+    <supports-screens android:smallScreens="true" android:normalScreens="true" android:largeScreens="true" android:anyDensity="true" />
+    <application android:icon="@drawable/ssicon" android:label="@string/app_name" android:debuggable="true"> 
+        <activity android:name=".MainActivity" android:label="@string/app_name">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <!-- 添加程序开机启动的广播接收器 -->
+	    <receiver android:name="BootBroadcast" android:permission="android.permission.RECEIVE_BOOT_COMPLETED">
+	    	<intent-filter><action android:name="android.intent.action.BOOT_COMPLETED"></action></intent-filter>
+		</receiver>
+		<!-- 程序包变更的广播接收器 -->
+		<receiver android:name ="PackageBroadcast">
+			<intent-filter>
+				<action android:name="android.intent.action.PACKAGE_REMOVED"/>            
+				<data android:scheme="package" />
+			</intent-filter>
+		</receiver>
+        <receiver android:name="org.nice.droidwall.StatusWidget">
+            <meta-data android:name="android.appwidget.provider" android:resource="@xml/onoff_widget" />
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+                <action android:name="org.nice.droidwall.intent.action.STATUS_CHANGED"/>
+                <action android:name="org.nice.droidwall.intent.action.TOGGLE_REQUEST"/>
+            </intent-filter>
+        </receiver>
+	</application>
+</manifest> 
