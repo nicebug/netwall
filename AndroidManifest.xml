@@ -22,7 +22,7 @@
 				<data android:scheme="package" />
 			</intent-filter>
 		</receiver>
-        <receiver android:name="org.nice.droidwall.StatusWidget">
+        <receiver android:name=".StatusWidget">
             <meta-data android:name="android.appwidget.provider" android:resource="@xml/onoff_widget" />
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />

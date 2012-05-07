@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <resources>
-    <string name="app_name">DroidWall</string>
-    <string name="title_enabled">DroidWall v%s</string>
-    <string name="title_disabled">DroidWall v%s (防火墙已禁用)</string>
+    <string name="app_name">NetWall</string>
+    <string name="title_enabled">NetWall v%s</string>
+    <string name="title_disabled">NetWall v%s (防火墙已禁用)</string>
     <string name="img_show">选择规则方式</string>
     <string name="showrules">显示规则</string>
     <string name="applyrules">应用规则</string>
@@ -40,8 +40,8 @@
     <string name="mode_header">模式: %s</string>
     <string name="mode_whitelist">白名单(允许选中)</string>
     <string name="mode_blacklist">黑名单(阻止选中)</string>
-    <string name="toast_bin_installed">DroidWall: 二进制文件已安装!</string>
-    <string name="toast_error_enabling">DroidWall: 启用防火墙时出错!</string>
+    <string name="toast_bin_installed">NetWall: 二进制文件已安装!</string>
+    <string name="toast_error_enabling">NetWall: 启用防火墙时出错!</string>
     <string name="alert_title">信息</string>
     <string name="no_root_access">
         \n<b>不能取得root权限.</b>
@@ -51,7 +51,7 @@
         \n<b>出错信息: </b>
     </string>
     <string name="help_dialog_text">
-		\n<b>DroidWall使用方法:</b>
+		\n<b>NetWall使用方法:</b>
 		\n<b>1.</b> 点击<b>模式</b>切换 <i>白名单</i> 和 <i>黑名单</i> 模式.
 		\n<b>2.</b> 标记你想阻止或允许(取决于已选择的模式)的程序, 针对每一个接口.
 		\n<b>3.</b> 打开菜单启用防火墙. 如果防火墙已启用,只需要选择<b>应用规则</b>.
@@ -59,14 +59,14 @@
 		\n如果你想检查当前iptables规则, 在菜单中选择<b>显示规则</b>.
 		\n
 		\n<b>桌面小插件:</b>
-		\n为了快速启用或禁用防火墙, 添加DroidWall桌面小插件到主屏幕.
+		\n为了快速启用或禁用防火墙, 添加NetWall桌面小插件到主屏幕.
 		\n
 		\n<b>防火墙日志:</b>
-		\n如果你想看到哪些程序被DroidWall阻止, 打开菜单并启用日志.
-		\nDroidWall将会记录每一个被阻止的程序. 你可以打开菜单并选择 <b>更多 -&gt; 显示日志</b> 来检查日志.
+		\n如果你想看到哪些程序被NetWall阻止, 打开菜单并启用日志.
+		\nNetWall将会记录每一个被阻止的程序. 你可以打开菜单并选择 <b>更多 -&gt; 显示日志</b> 来检查日志.
 		\n
 		\n<b>程序锁:</b>
-		\n你可以使用菜单中的<b>设置密码</b>选项来为DroidWall设置密码锁.
+		\n你可以使用菜单中的<b>设置密码</b>选项来为NetWall设置密码锁.
 		\n若要移除密码保护,只需要将它重置为空白.
 	</string>
 </resources>
