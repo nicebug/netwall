@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">DroidWall</string>
-    <string name="title_enabled">DroidWall v%s</string>
-    <string name="title_disabled">DroidWall v%s (Firewall disabled)</string>
+    <string name="app_name">NetWall</string>
+    <string name="title_enabled">NetWall v%s</string>
+    <string name="title_disabled">NetWall v%s (Firewall disabled)</string>
     <string name="img_show">show kind of rule</string>
     <string name="showrules">Show rules</string>
     <string name="applyrules">Apply rules</string>
@@ -40,20 +40,20 @@
     <string name="mode_header">Mode: %s</string>
     <string name="mode_whitelist">White list (allow selected)</string>
     <string name="mode_blacklist">Black list (block selected)</string>
-    <string name="toast_bin_installed">DroidWall: Binary files installed!</string>
-    <string name="toast_error_enabling">"DroidWall: Error enabling firewall!"</string>
+    <string name="toast_bin_installed">NetWall: Binary files installed!</string>
+    <string name="toast_error_enabling">"NetWall: Error enabling firewall!"</string>
     <string name="alert_title">Info</string>
     <string name="no_root_access">
         \n<b>Could not acquire root access.</b>
-        \n<b>You need a rooted phone to run DroidWall</b>
+        \n<b>You need a rooted phone to run NetWall</b>
         \n
-        \n<b>If this phone is already rooted, please make sure DroidWall has enough permissions to execute the \"su\" command.</b>
+        \n<b>If this phone is already rooted, please make sure NetWall has enough permissions to execute the \"su\" command.</b>
         \n<b>Error message: </b>
     </string>
 	<string name="help_dialog_text">
 		
 		\n
-		\n<b>Using DroidWall:</b>
+		\n<b>Using NetWall:</b>
 		\n<b>1.</b> Click on <b>Mode</b> to switch between <i>White List</i> and <i>Black List</i> modes.
 		\n<b>2.</b> Mark the applications that you want to block or allow (depending on the selected mode), for each interface.
 		\n<b>3.</b> Open the menu and enable the firewall. If the firewall is already enabled, just select <b>Apply rules</b>.
@@ -61,14 +61,14 @@
 		\nIf want to check all current iptables rules, select <b>Show rules</b> in the menu.
 		\n
 		\n<b>Widget:</b>
-		\nTo quickly enable or disable the firewall, add the DroidWall widget to your home screen.
+		\nTo quickly enable or disable the firewall, add the NetWall widget to your home screen.
 		\n
 		\n<b>Firewall logs:</b>
-		\nIf you want to see which applications have been blocked by DroidWall, open the menu and enable the Log.
-		\nDroidWall will then log each application blocked. You can check the log by opening the menu and selecting <b>More -> Show log</b>.
+		\nIf you want to see which applications have been blocked by NetWall, open the menu and enable the Log.
+		\nNetWall will then log each application blocked. You can check the log by opening the menu and selecting <b>More -> Show log</b>.
 		\n
 		\n<b>Password lock:</b>
-		\nYou can set a password lock for DroidWall by using the <b>Set password</b> menu option.
+		\nYou can set a password lock for NetWall by using the <b>Set password</b> menu option.
 		\nTo remove the password protection, just reset it to blank.
 	</string>
 </resources>

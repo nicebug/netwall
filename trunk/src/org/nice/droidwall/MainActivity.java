@@ -50,15 +50,15 @@ import org.nice.droidwall.R;
 public class MainActivity extends Activity implements OnCheckedChangeListener, OnClickListener {
 	
 	// Menu options
-	private static final int MENU_DISABLE	= 0;
-	private static final int MENU_TOGGLELOG	= 1;
-	private static final int MENU_APPLY		= 2;
-	private static final int MENU_EXIT		= 3;
-	private static final int MENU_HELP		= 4;
-	private static final int MENU_SHOWLOG	= 5;
-	private static final int MENU_SHOWRULES	= 6;
-	private static final int MENU_CLEARLOG	= 7;
-	private static final int MENU_SETPWD	= 8;
+	private static final int MENU_DISABLE	= 0; //防火墙启用开关
+	private static final int MENU_TOGGLELOG	= 1; //日志启用
+	private static final int MENU_APPLY		= 2; //规则应用开关
+	private static final int MENU_EXIT		= 3; //退出菜单
+	private static final int MENU_HELP		= 4; //帮助菜单
+	private static final int MENU_SHOWLOG	= 5; //显示日志菜单
+	private static final int MENU_SHOWRULES	= 6; //显示规则菜单
+	private static final int MENU_CLEARLOG	= 7; //清除日志菜单
+	private static final int MENU_SETPWD	= 8; //设置密码菜单
 	
 	/** progress dialog instance */
 	private ListView listview;
@@ -77,7 +77,7 @@ public class MainActivity extends Activity implements OnCheckedChangeListener, O
     protected void onStart() {
     	super.onStart();
     	// Force re-loading the application list
-		Log.d("DroidWall", "onStart() - Forcing APP list reload!");
+		Log.d("NetWall", "onStart() - Forcing APP list reload!");
     	Api.applications = null;
     }
     @Override
@@ -370,7 +370,7 @@ public class MainActivity extends Activity implements OnCheckedChangeListener, O
      */
 	private void disableOrEnable() {
 		final boolean enabled = !Api.isEnabled(this);
-		Log.d("DroidWall", "Changing enabled status to: " + enabled);
+		Log.d("NetWall", "Changing enabled status to: " + enabled);
 		Api.setEnabled(this, enabled);
 		if (enabled) {
 			applyOrSaveRules();
@@ -455,15 +455,15 @@ public class MainActivity extends Activity implements OnCheckedChangeListener, O
 			public void handleMessage(Message msg) {
     			try {progress.dismiss();} catch(Exception ex){}
 				if (enabled) {
-					Log.d("DroidWall", "Applying rules.");
+					Log.d("NetWall", "Applying rules.");
 					if (Api.hasRootAccess(MainActivity.this, true) && Api.applyIptablesRules(MainActivity.this, true)) {
 						Toast.makeText(MainActivity.this, R.string.rules_applied, Toast.LENGTH_SHORT).show();
 					} else {
-						Log.d("DroidWall", "Failed - Disabling firewall.");
+						Log.d("NetWall", "Failed - Disabling firewall.");
 						Api.setEnabled(MainActivity.this, false);
 					}
 				} else {
-					Log.d("DroidWall", "Saving rules.");
+					Log.d("NetWall", "Saving rules.");
 					Api.saveRules(MainActivity.this);
 					Toast.makeText(MainActivity.this, R.string.rules_saved, Toast.LENGTH_SHORT).show();
 				}
@@ -560,7 +560,8 @@ public class MainActivity extends Activity implements OnCheckedChangeListener, O
 			break;
 		case R.id.itemtext:
 			//Api.alert(this, "just a test ");
-			showApplicationDetail();
+			Log.d("NetWall", getString(v.getId()));
+			//showApplicationDetail();
 			break;
 		}
 	}

@@ -26,7 +26,7 @@ public class StatusWidget extends AppWidgetProvider {
 	public void onReceive(Context context, Intent intent) {
         super.onReceive(context, intent);
         if (Api.STATUS_CHANGED_MSG.equals(intent.getAction())) {
-        	// Broadcast sent when the DroidWall status has changed
+        	// Broadcast sent when the NetWall status has changed
             final Bundle extras = intent.getExtras();
             if (extras != null && extras.containsKey(Api.STATUS_EXTRA)) {
                 final boolean firewallEnabled = extras.getBoolean(Api.STATUS_EXTRA);
@@ -35,7 +35,7 @@ public class StatusWidget extends AppWidgetProvider {
                 showWidget(context, manager, widgetIds, firewallEnabled);
             }
         } else if (Api.TOGGLE_REQUEST_MSG.equals(intent.getAction())) {
-        	// Broadcast sent to request toggling DroidWall's status
+        	// Broadcast sent to request toggling NetWall's status
             final SharedPreferences prefs = context.getSharedPreferences(Api.PREFS_NAME, 0);
             boolean enabled = !prefs.getBoolean(Api.PREF_ENABLED, true);
     		final String pwd = prefs.getString(Api.PREF_PASSWORD, "");
