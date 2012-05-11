@@ -17,6 +17,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.content.pm.ApplicationInfo;
@@ -59,6 +60,8 @@ public class MainActivity extends Activity implements OnCheckedChangeListener, O
 	private static final int MENU_SHOWRULES	= 6; //显示规则菜单
 	private static final int MENU_CLEARLOG	= 7; //清除日志菜单
 	private static final int MENU_SETPWD	= 8; //设置密码菜单
+	private static final int SMS_PREVENT    = 9; //设置短信拦截
+	private static final int DIAL_PREVENT   = 10; //设置来电拦截
 	
 	/** progress dialog instance */
 	private ListView listview;
@@ -302,6 +305,8 @@ public class MainActivity extends Activity implements OnCheckedChangeListener, O
     	menu.add(0, MENU_SHOWRULES, 0, R.string.showrules).setIcon(R.drawable.show);
     	menu.add(0, MENU_CLEARLOG, 0, R.string.clear_log).setIcon(android.R.drawable.ic_menu_close_clear_cancel);
     	menu.add(0, MENU_SETPWD, 0, R.string.setpwd).setIcon(android.R.drawable.ic_lock_lock);
+    	menu.add(0, SMS_PREVENT, 0, R.string.sms_prevent).setIcon(R.drawable.mms);
+    	menu.add(0, DIAL_PREVENT, 0, R.string.dial_prevent).setIcon(R.drawable.dial);
     	
     	return true;
     }
@@ -362,10 +367,63 @@ public class MainActivity extends Activity implements OnCheckedChangeListener, O
     	case MENU_CLEARLOG:
     		clearLog();
     		return true;
+    	case SMS_PREVENT:
+    		preventSMS();
+    		return true;
+    	case DIAL_PREVENT:
+    		preventDial();
+    		return true;
     	}
     	return false;
     }
-    /**
+   /**
+    * prevent SMS
+    */
+	private void preventSMS()
+	{
+		Log.d("NetWall", "before sms ");
+		//new Dial_prevent(this);
+		final Resources res = getResources();
+		final ProgressDialog progress = ProgressDialog.show(this, res.getString(R.string.working), 
+				res.getString(R.string.please_wait), true);
+		final Handler handler = new Handler() {
+			public void handleMessage(Message msg) {
+    			try {
+    				progress.dismiss();
+    				} 
+    			catch(Exception ex){}
+    			Intent intent = new Intent();
+    			intent.setClass(MainActivity.this, SMSPrevent.class);
+    			startActivity(intent);
+			}
+		};
+		handler.sendEmptyMessageDelayed(0, 100);
+		
+	}
+	
+	 private void preventDial()
+	{
+		Log.d("NetWall", "before dial");
+		//new Dial_prevent(this);
+		final Resources res = getResources();
+		final ProgressDialog progress = ProgressDialog.show(this, res.getString(R.string.working), 
+				res.getString(R.string.please_wait), true);
+		final Handler handler = new Handler() {
+			public void handleMessage(Message msg) {
+    			try {
+    				progress.dismiss();
+    				} 
+    			catch(Exception ex){}
+    			Intent intent = new Intent();
+    			intent.setClass(MainActivity.this, Dialprevent.class);
+    			startActivity(intent);
+			}
+		};
+		handler.sendEmptyMessageDelayed(0, 100);
+		
+		//MainActivity.this.finish();
+	}
+	/**
      * Enables or disables the firewall
      */
 	private void disableOrEnable() {
