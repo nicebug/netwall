@@ -9,6 +9,11 @@
     <string name="saverules">Save rules</string>
     <string name="purgerules">Purge rules</string>
     <string name="setpwd">Set password</string>
+    <string name="sms_prevent">MMS prevent</string>
+    <string name="dial_prevent">Dial prevent</string>
+    <string name="valid_phonenumber">Input valid phone number</string>
+    <string name="regiset">regiset</string>
+    <string name="unregiset">unregiset</string>
     <string name="help">Help</string>
     <string name="close">Close</string>
     <string name="exit">Exit</string>
@@ -43,6 +48,8 @@
     <string name="toast_bin_installed">NetWall: Binary files installed!</string>
     <string name="toast_error_enabling">"NetWall: Error enabling firewall!"</string>
     <string name="alert_title">Info</string>
+    <string name="add_tel">Add</string>
+    <string name="show_tel">Show</string>
     <string name="no_root_access">
         \n<b>Could not acquire root access.</b>
         \n<b>You need a rooted phone to run NetWall</b>
