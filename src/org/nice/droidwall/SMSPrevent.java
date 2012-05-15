@@ -1,12 +1,18 @@
 package org.nice.droidwall;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import android.R.integer;
 import android.app.Activity;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.telephony.PhoneNumberUtils;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -15,9 +21,14 @@ import android.widget.Toast;
 
 public class SMSPrevent extends Activity{
 	
-	private Button regisetBtn;
-	private Button unregisetBtn;
+	private static final int MENU_REGISET    = 21;
+	private static final int MENU_UNREGISET  = 22;
+	
+	private Button queryPhoneNumBtn;
+	private Button removePhoneNumBtn;
+	private Button addPhoneNumBtn;
 	private EditText phoneNumber;
+	private List<String> numList;
 	
 	private SMSReceiver receiver;
 	private boolean isRegisted = false;
@@ -30,15 +41,64 @@ public class SMSPrevent extends Activity{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.sms);
 		
-		regisetBtn = (Button)findViewById(R.id.register);
-		unregisetBtn = (Button)findViewById(R.id.unregister);
 		phoneNumber = (EditText)findViewById(R.id.phonenumber);
+		addPhoneNumBtn = (Button)findViewById(R.id.add_phonenumber);
+		queryPhoneNumBtn = (Button)findViewById(R.id.query_phonenumber);
+		removePhoneNumBtn = (Button)findViewById(R.id.remove_phonenumber);
 		
 		
-		receiver = new SMSReceiver(phoneNumber.getText().toString());
-		regisetBtn.setOnClickListener(new SMSOnClickListener());
-		unregisetBtn.setOnClickListener(new SMSOnClickListener());
+		numList = new ArrayList<String>();
+		receiver = new SMSReceiver(numList);
+		//regisetBtn.setOnClickListener(new SMSOnClickListener());
+		//unregisetBtn.setOnClickListener(new SMSOnClickListener());
+		addPhoneNumBtn.setOnClickListener(new SMSOnClickListener());
+		removePhoneNumBtn.setOnClickListener(new SMSOnClickListener());
+		queryPhoneNumBtn.setOnClickListener(new SMSOnClickListener());
 		
+	}
+	
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu)
+	{
+		menu.add(0, MENU_REGISET, 0, R.string.regiset).setIcon(android.R.drawable.ic_lock_lock);
+		menu.add(0, MENU_UNREGISET, 1, R.string.unregiset).setIcon(android.R.drawable.button_onoff_indicator_on);
+		return super.onCreateOptionsMenu(menu);
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item)
+	{
+		super.onOptionsItemSelected(item);
+		switch (item.getItemId())
+		{
+		case MENU_REGISET:
+			Log.d("NetWall", "MENU_REGISET CHOICE");
+			regiset();
+			Log.d("NetWall", "isRegiseted:" + isRegisted);
+			break;
+		case MENU_UNREGISET:
+			Log.d("NetWall", "MENU_UNREGISET CHOICE");
+			unregiset();
+			break;
+		default:
+			break;
+		}
+		return true;
+	}
+	
+	@Override
+	public boolean onPrepareOptionsMenu(Menu menu)
+	{
+		//通过ID来获取菜单项，进而进行其他操作 此处采用getItem()会产生异常
+		MenuItem menu_onff = menu.findItem(MENU_UNREGISET);
+		Log.d("NetWall", "menu_onoff" + menu_onff.toString());
+		if (isRegisted)
+		{
+			menu_onff.setIcon(android.R.drawable.button_onoff_indicator_on);
+		}else {
+			menu_onff.setIcon(android.R.drawable.button_onoff_indicator_off);
+		}
+		return super.onPrepareOptionsMenu(menu);
 	}
 	
 	public class SMSOnClickListener implements OnClickListener
@@ -49,11 +109,14 @@ public class SMSPrevent extends Activity{
 		{
 			switch (v.getId())
 			{
-			case R.id.register:
-				regiset(v);
+			case R.id.add_phonenumber:
+				addPhoneNumber();
 				break;
-			case R.id.unregister:
-				unregiset(v);
+			case R.id.remove_phonenumber:
+				removePhoneNumber();
+				break;
+			case R.id.query_phonenumber:
+				//add query function here
 				break;
 			default:
 				break;
@@ -62,8 +125,79 @@ public class SMSPrevent extends Activity{
 		
 	}
 	
-	public void regiset(View v)
+	/**
+	 * 短信拦截名单的添加
+	 * @param v
+	 */
+	public void addPhoneNumber()
 	{
+		if (isPhoneNumberValid(phoneNumber.getText().toString()))
+		{
+			if (!numList.contains(phoneNumber.getText().toString()))
+			{
+				numList.add(phoneNumber.getText().toString());
+				Toast.makeText(this, "号码" + phoneNumber.getText().toString() + "已添加", Toast.LENGTH_LONG).show();
+				phoneNumber.setText("");
+			}
+			else {
+				Toast.makeText(this, "该号码已添加到拦截名单，无须重复添加", Toast.LENGTH_LONG).show();
+				phoneNumber.setText("");
+			}
+		}
+		else {
+			Toast.makeText(this, "电话号码非法", Toast.LENGTH_LONG).show();
+			phoneNumber.setText("");
+		}
+	}
+	
+	/**
+	 * 短信拦截名单的移除
+	 */
+	public void removePhoneNumber()
+	{
+		if (isPhoneNumberValid(phoneNumber.getText().toString()))
+		{
+			if (numList.isEmpty())
+			{
+				Toast.makeText(this, "黑名单为空", Toast.LENGTH_SHORT).show();
+			}else {
+				if (numList.contains(phoneNumber.getText().toString()))
+				{
+					numList.remove(phoneNumber.getText().toString());
+					Toast.makeText(this, "号码"+ phoneNumber.getText().toString() +"成功被移除拦截名单", Toast.LENGTH_LONG).show();
+					phoneNumber.setText("");
+				}
+			}
+		}
+		else {
+			Toast.makeText(this, "电话号码非法", Toast.LENGTH_LONG).show();
+		}
+	}
+	
+	public void regiset()
+	{
+		if (!numList.isEmpty())
+		{
+			for (String num : numList)
+			{
+				if (isPhoneNumberValid(num))
+				{
+					IntentFilter filter = new IntentFilter(RECEIVE_SMS_ACTION);
+					filter.setPriority(Integer.MAX_VALUE);
+					registerReceiver(receiver, filter);
+					isRegisted = true;
+					Toast.makeText(this, "号码"+ num +"注册成功", Toast.LENGTH_LONG).show();
+				}
+				else {
+					Toast.makeText(this, "电话号码非法", Toast.LENGTH_LONG).show();
+				}
+			}
+		}
+		else {
+			Toast.makeText(this, "请先添加号码", Toast.LENGTH_LONG).show();
+			
+		}
+		/**
 		if (isPhoneNumberValid(phoneNumber.getText().toString()))
 		{
 			IntentFilter filter = new IntentFilter(RECEIVE_SMS_ACTION);
@@ -74,11 +208,11 @@ public class SMSPrevent extends Activity{
 		}
 		else {
 			Toast.makeText(this, "电话号码非法", Toast.LENGTH_LONG).show();
-		}
+		}*/
 	}
 	
 	
-	public void unregiset(View v)
+	public void unregiset()
 	{
 		if (receiver != null && isRegisted)
 		{
