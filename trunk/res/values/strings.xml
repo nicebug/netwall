@@ -12,6 +12,9 @@
     <string name="sms_prevent">MMS prevent</string>
     <string name="dial_prevent">Dial prevent</string>
     <string name="valid_phonenumber">Input valid phone number</string>
+    <string name="add_phonenumber">Add</string>
+    <string name="query_phonenumber">Query</string>
+    <string name="remove_phonenumber">Remove</string>
     <string name="regiset">regiset</string>
     <string name="unregiset">unregiset</string>
     <string name="help">Help</string>

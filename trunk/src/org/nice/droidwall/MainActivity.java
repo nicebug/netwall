@@ -1,4 +1,3 @@
-//i want to test
 /**
  * Main application activity.
  * This is the screen displayed when you open the application
@@ -416,7 +415,7 @@ public class MainActivity extends Activity implements OnCheckedChangeListener, O
     				} 
     			catch(Exception ex){}
     			Intent intent = new Intent();
-    			intent.setClass(MainActivity.this, Dialprevent.class);
+    			intent.setClass(MainActivity.this, DialPrevent.class);
     			startActivity(intent);
 			}
 		};

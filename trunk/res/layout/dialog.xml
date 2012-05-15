@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>  
+ <LinearLayout  
+   xmlns:Android="http://schemas.android.com/apk/res/android"  
+   Android:layout_width="fill_parent"  
+   Android:layout_height="fill_parent"  
+   Android:orientation="vertical">  
+   <EditText     
+     Android:layout_width="fill_parent"    
+     Android:layout_height="wrap_content"    
+     Android:id="@+id/et_number"  
+     Android:inputType="phone"
+     Android:hint="请输入电话号码"
+     Android:maxLength="11"
+     />  
+ </LinearLayout>

@@ -12,6 +12,9 @@
     <string name="sms_prevent">短信拦截器</string>
     <string name="dial_prevent">来电拦截器</string>
     <string name="valid_phonenumber">请输入正确电话号码</string>
+    <string name="add_phonenumber">添加</string>
+    <string name="query_phonenumber">查询</string>
+    <string name="remove_phonenumber">删除</string>
     <string name="regiset">注册</string>
     <string name="unregiset">解注册</string>
     <string name="help">帮助</string>

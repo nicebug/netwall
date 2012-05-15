@@ -3,21 +3,58 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
-
+	<View android:layout_width="fill_parent" android:layout_height="3px" android:background="#FFFFFFFF" />
     <TextView
         android:id="@+id/sms_info"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="@string/sms_prevent" />
-
+    <View android:layout_width="fill_parent" android:layout_height="1px" android:background="#FFFFFFFF" />
+    
     <EditText
         android:id="@+id/phonenumber"
         android:hint="@string/valid_phonenumber"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:inputType="phone"></EditText>
+    <View android:layout_width="fill_parent" android:layout_height="1px" android:background="#FFFFFFFF" />
+    <RelativeLayout 
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+        <Button 
+        	android:id="@+id/add_phonenumber"
+        	android:layout_width="wrap_content"
+        	android:layout_height="wrap_content"
+        	android:text="@string/add_phonenumber"
+        	android:layout_alignParentRight="true"
+        	android:layout_alignParentTop="true"
+        	android:textColor="#00aa00"
+        	android:textAppearance="?android:attr/textAppearanceMedium"/>
+        <Button 
+            android:id="@+id/query_phonenumber"
+            android:layout_width="wrap_content"
+        	android:layout_height="wrap_content"
+        	android:layout_centerHorizontal="true"
+        	android:layout_alignParentTop="true"
+        	android:text="@string/query_phonenumber"
+        	android:textColor="#00aa00"
+        	android:textAppearance="?android:attr/textAppearanceMedium"/>
+        
+        <Button 
+            android:id="@+id/remove_phonenumber"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:text="@string/remove_phonenumber"
+            android:textColor="#00aa00"
+            
+            android:textAppearance="?android:attr/textAppearanceMedium"/>
+    </RelativeLayout>
+    
+    	
 
-    <Button
+    <!--  <Button
         android:id="@+id/register"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -28,5 +65,5 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/unregiset" />
-
+	-->
 </LinearLayout>
