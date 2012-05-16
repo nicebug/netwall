@@ -7,6 +7,9 @@ import java.util.regex.Pattern;
 
 import android.R.integer;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.telephony.PhoneNumberUtils;
@@ -116,13 +119,49 @@ public class SMSPrevent extends Activity{
 				removePhoneNumber();
 				break;
 			case R.id.query_phonenumber:
-				//add query function here
+				queryPhoneNumber();
 				break;
 			default:
 				break;
 			}
 		}
-		
+
+	}
+	
+	/**
+	 * 黑名单查询
+	 */
+	private void queryPhoneNumber()
+	{
+		if (numList.isEmpty() || numList == null)
+		{
+			Toast.makeText(this, "黑名单为空", Toast.LENGTH_SHORT).show();
+		}
+		else {
+			StringBuilder sb = new StringBuilder();
+			for (String phone : numList)
+			{
+				sb.append(phone + "\n");
+			}
+			View view = getLayoutInflater().inflate(R.layout.sms_black_list, null);
+			new AlertDialog.Builder(this)
+			.setTitle("SMS黑名单列表")
+			.setView(view)
+			.setIcon(R.drawable.icon)
+			.setMessage(sb.toString())
+			.setPositiveButton("确定",  new SMSListener())
+			.show();
+		}
+	}
+	
+	private class SMSListener implements android.content.DialogInterface.OnClickListener{
+
+		@Override
+		public void onClick(DialogInterface dialog, int which)
+		{
+			dialog.dismiss();
+		}
+			
 	}
 	
 	/**

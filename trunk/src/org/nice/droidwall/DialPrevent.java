@@ -72,7 +72,7 @@ import android.widget.Toast;
       */
      private void regist() {
     	 Intent intent = new Intent(DialPrevent.this, PhoneListenerService.class);
-    	 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+    	 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK); //这句是必须的 如果没有则service监听失败
     	 
          startService(intent);
          Log.d("NetWall", "DialPrevent start service");
@@ -131,22 +131,30 @@ import android.widget.Toast;
                  .setPositiveButton("添加", new DialogInterface.OnClickListener() {
                      @Override
                      public void onClick(DialogInterface dialog, int which) {
-                         numberEditText = (EditText) view
-                                 .findViewById(R.id.et_number);
+                         numberEditText = (EditText) view.findViewById(R.id.et_number);
                          String number = numberEditText.getText().toString();
-                         if (number.trim().length() == 0) {
+                         if (number.trim().length() == 0) 
+                         {
                              DialPrevent.this.showToast("请输入拦截号码！");
-                         } else if (dao.findTelphone(number).getCount() != 0) {
-                             DialPrevent.this
-                                     .showToast("输入号码已存在，无需增加！");
-                         } else {
+                             dao.closeDB();
+                         } 
+                         else if (dao.findTelphone(number).getCount() != 0) 
+                         {
+                             DialPrevent.this.showToast("输入号码已存在，无需增加！");
+                             dao.closeDB();
+                         } 
+                         else 
+                         {
                              Telphone telphone = new Telphone(number);
                              long id = dao.addTelphone(telphone);
-                             if (id < 0) {
+                             if (id < 0) 
+                             {
                                  DialPrevent.this.showToast("添加失败！");
+                                 dao.closeDB();
                              } else {
                                  DialPrevent.this.showToast("添加成功！");
                                  showListView();
+                                 dao.closeDB();
                              }
                          }
                      }
