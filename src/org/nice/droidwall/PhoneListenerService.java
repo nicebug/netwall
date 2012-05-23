@@ -61,6 +61,7 @@ public class PhoneListenerService extends Service {
 					stop(incomingNumber);
 				}
 				cursor.close();
+				dao.closeDB();
 				break;
 				
 			default:
@@ -82,7 +83,9 @@ public class PhoneListenerService extends Service {
 		{
 			 Method method = Class.forName("android.os.ServiceManager").getMethod("getService", String.class);
 			 IBinder binder = (IBinder) method.invoke(null, new Object[] { TELEPHONY_SERVICE });
+			 //获取绑定接口
 			 ITelephony telephony = ITelephony.Stub.asInterface(binder);
+			 //调用服务中的endCall方法
 			 telephony.endCall();
 		}
 		catch (Exception e)
