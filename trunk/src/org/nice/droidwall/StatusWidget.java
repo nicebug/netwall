@@ -18,6 +18,7 @@ import android.widget.RemoteViews;
 import android.widget.Toast;
 
 /**
+ * 桌面小插件
  * ON/OFF Widget implementation
  */
 public class StatusWidget extends AppWidgetProvider {
@@ -61,6 +62,7 @@ public class StatusWidget extends AppWidgetProvider {
             Api.setEnabled(context, enabled);
         }
 	}
+	//每次更新都会调用本方法
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] ints) {
         super.onUpdate(context, appWidgetManager, ints);
