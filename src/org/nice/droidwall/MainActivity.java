@@ -12,6 +12,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import org.nice.droidwall.Api.DroidApp;
+import org.nice.droidwall.digest.MD5;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -93,6 +94,7 @@ public class MainActivity extends Activity implements OnCheckedChangeListener, O
     	//重置程序的头部
     	refreshHeader();
 		final String pwd = getSharedPreferences(Api.PREFS_NAME, 0).getString(Api.PREF_PASSWORD, "");
+		
 		if (pwd.length() == 0) {
 			// No password lock
 			showOrLoadApplications();
@@ -163,7 +165,7 @@ public class MainActivity extends Activity implements OnCheckedChangeListener, O
     }
     /**
      * Set a new password lock
-     * 设置新密码锁
+     * 设置新密码锁,将密码放置到SharedPreferences中
      * @param pwd new password (empty to remove the lock)
      */
 	private void setPassword(String pwd) {
@@ -193,7 +195,9 @@ public class MainActivity extends Activity implements OnCheckedChangeListener, O
 					android.os.Process.killProcess(android.os.Process.myPid());
 					return false;
 				}
-				if (!pwd.equals(msg.obj)) {
+				MD5 md5 = new MD5();
+				String inputPWD = md5.encodeByMD5((String)msg.obj);
+				if (!pwd.equals(inputPWD)) {
 					requestPassword(pwd);
 					return false;
 				}
@@ -444,7 +448,10 @@ public class MainActivity extends Activity implements OnCheckedChangeListener, O
 		new PassDialog(this, true, new android.os.Handler.Callback() {
 			public boolean handleMessage(Message msg) {
 				if (msg.obj != null) {
-					setPassword((String)msg.obj);
+					MD5 md5 = new MD5();
+					String pwd = md5.encodeByMD5((String)msg.obj);
+					setPassword(pwd);
+					//setPassword((String)msg.obj);
 				}
 				return false;
 			}

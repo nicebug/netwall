@@ -54,12 +54,14 @@ import android.database.Cursor;
              data.add(map);
          }
          cursor.close();
+         closeDB();
          return data;
      }
      /**
       * ºÚÃûµ¥ºÅÂë²éÑ¯
       */
-     public Cursor findTelphone(String number) {
+     public Cursor findTelphone(String number)
+     {
          Cursor cursor = dbHelper.getWritableDatabase().query(
                  TableContanst.BLACK_NUMBER_TABLE, null, "number=?",
                  new String[] { number }, null, null, null, null);

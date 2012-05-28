@@ -170,7 +170,7 @@ public class SMSPrevent extends Activity{
 	 */
 	public void addPhoneNumber()
 	{
-		if (isPhoneNumberValid(phoneNumber.getText().toString()))
+		if (isPhoneNumberValid2(phoneNumber.getText().toString()))
 		{
 			if (!numList.contains(phoneNumber.getText().toString()))
 			{
@@ -219,7 +219,7 @@ public class SMSPrevent extends Activity{
 		{
 			for (String num : numList)
 			{
-				if (isPhoneNumberValid(num))
+				if (isPhoneNumberValid2(num))
 				{
 					IntentFilter filter = new IntentFilter(RECEIVE_SMS_ACTION);
 					filter.setPriority(Integer.MAX_VALUE);
