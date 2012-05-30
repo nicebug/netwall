@@ -4,9 +4,13 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+import org.nice.droidwall.db.SMSDao;
+import org.nice.droidwall.db.SMSManagerDBHelper;
+
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.telephony.SmsManager;
 import android.telephony.SmsMessage;
@@ -17,6 +21,7 @@ public class SMSReceiver extends BroadcastReceiver {
 	private static final String RECEIVE_SMS_ACTION = "android.provider.Telephony.SMS_RECEIVED";
 	private String phoneNumber;
 	private List<String> numList;
+	private SMSDao dao;
 	
 	public SMSReceiver() {
 		Log.d("NetWall", "SMSRecevier create");
@@ -37,6 +42,7 @@ public class SMSReceiver extends BroadcastReceiver {
 	@Override
 	public void onReceive(Context context, Intent intent)
 	{
+		
 		//判断传来的intent为短信
 		if (intent.getAction().equals(RECEIVE_SMS_ACTION))
 		{
@@ -44,6 +50,7 @@ public class SMSReceiver extends BroadcastReceiver {
 			if (bundle != null)
 			{
 				Log.d("NetWall", "SMSRecevier onReceive");
+				dao = new SMSDao(new SMSManagerDBHelper(context));
 				
 				Object[] pdus = (Object[]) intent.getExtras().get("pdus");
 				if (pdus != null && pdus.length > 0)
@@ -58,16 +65,36 @@ public class SMSReceiver extends BroadcastReceiver {
 					{
 						String content = message.getMessageBody(); //得到短信内容
 						String sender = message.getOriginatingAddress(); //得到发信息的号码
-						//here add telephone number
-						for (String num : numList)
+						
+						if (sender.contains("+86"))
 						{
-							Log.d("NetWall", "num:" + num);
-							if (sender.equals(num))
+							sender = sender.substring(3);
+						}
+						else if (sender.contains("12520"))
+						{
+							sender = sender.substring(5);
+						}
+						Log.d("NetWall", "sender" + sender);
+						Cursor cursor = dao.findSMSByNumber(sender);
+						try
+						{
+							if (cursor != null && cursor.getCount() != 0)
 							{
-								abortBroadcast(); //中指发送
-								Log.d("NetWall", "此号码为黑名单号码，已拦截");
+								abortBroadcast();
+								Log.d("NetWall", "号码" + sender + "为黑名单，已拦截");
+								//cursor.close();
+								//dao.closeDB();
 								break;
 							}
+						}
+						catch (Exception e)
+						{
+							e.printStackTrace();
+						}
+						finally
+						{
+							cursor.close();
+							dao.closeDB();
 						}
 						
 						/**
