@@ -8,77 +8,71 @@ import java.util.Map;
 import android.content.ContentValues;
 import android.database.Cursor;
 
-public class TelphoneDao {
-	private TelphoneMangerDBHelper dbHelper;
+public class SMSDao {
 
-	public TelphoneDao(TelphoneMangerDBHelper dbHelper) {
+	private SMSManagerDBHelper dbHelper;
+	
+	public SMSDao(SMSManagerDBHelper dbHelper) {
 		this.dbHelper = dbHelper;
 	}
-
-	/**
-	 * 添加一个Telphone对象数据到数据库表
-	 */
-	public long addTelphone(Telphone phone)
-	{
-
-		ContentValues values = new ContentValues();
-		values.put(TableContanst.NumberColumns.NUMBER, phone.getNumber());
-		return dbHelper.getWritableDatabase().insert(
-				TableContanst.BLACK_NUMBER_TABLE, null, values);
-
-	}
-
+	
 	
 	/**
-	 * 删除一个number所对应的数据库表Telphone的记录
+	 * 添加一个SMS对象到数据库表
+	 * @param sms
+	 * @return
 	 */
-	public int deleteTelphoneById(String number)
+	public long addSMS(SMS sms)
+	{
+		ContentValues values = new ContentValues();
+		values.put(TableContanst.SMSColunms.NUMBER, sms.getNumber());
+		return dbHelper.getWritableDatabase().insert(
+				TableContanst.BLACK_SMS_TABLE, null, values);
+	}
+
+	/**
+	 * 删除一个number在数据库表sms中对应的记录
+	 * @param number
+	 * @return
+	 */
+	public int deleteSMSById(String number)
 	{
 		return dbHelper.getWritableDatabase().delete(
-				TableContanst.BLACK_NUMBER_TABLE,
-				TableContanst.NumberColumns.NUMBER + "=?",
+				TableContanst.BLACK_SMS_TABLE,
+				TableContanst.SMSColunms.NUMBER + "=?",
 				new String[] { number + "" });
 	}
-	
-	/**
-	 * 查询所有的记录
-	 */
-	public List<Map<String, Object>> getAllTelphone()
+
+	public List<Map<String, Object>> getAllSMS()
 	{
 		List<Map<String, Object>> data = new ArrayList<Map<String, Object>>();
 		Cursor cursor = dbHelper.getReadableDatabase().query(
-				TableContanst.BLACK_NUMBER_TABLE, null, null, null, null, null,
+				TableContanst.BLACK_SMS_TABLE, null, null, null, null, null,
 				"_id desc");
 		while (cursor.moveToNext())
 		{
 			Map<String, Object> map = new HashMap<String, Object>(8);
 			String number = cursor.getString(cursor
-					.getColumnIndex(TableContanst.NumberColumns.NUMBER));
-			map.put(TableContanst.NumberColumns.NUMBER, number);
+					.getColumnIndex(TableContanst.SMSColunms.NUMBER));
+			map.put(TableContanst.SMSColunms.NUMBER, number);
 			data.add(map);
 		}
 		cursor.close();
 		// closeDB();
 		return data;
 	}
-
 	
-	
-	/**
-	 * 黑名单号码查询
-	 */
-	public Cursor findTelphone(String number)
+	public Cursor findSMSByNumber(String number)
 	{
 		Cursor cursor = dbHelper.getReadableDatabase().query(
-				TableContanst.BLACK_NUMBER_TABLE, null, "number=?",
+				TableContanst.BLACK_SMS_TABLE, null, "number=?",
 				new String[] { number }, null, null, null, null);
 		return cursor;
 	}
 	
-	
-
 	public void closeDB()
 	{
 		dbHelper.close();
 	}
+	
 }

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteDatabase.CursorFactory;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.telephony.TelephonyManager;
 import android.util.Log;
 
 /**
@@ -27,19 +28,30 @@ public class TelphoneMangerDBHelper extends SQLiteOpenHelper {
 	{
 		this(context, DB_NAME, null, VERSION);
 	}
+	
 
 	/**
-	 * 创建数据库
+	 * 创建数据表
 	 */
 	@Override
 	public void onCreate(SQLiteDatabase db)
 	{
-		Log.d(Tag, "DB onCreate");
+		Log.d(Tag, "DB_table number onCreate");
+		//创建来电黑名单的表
 		db.execSQL("create table "
 				+ TableContanst.BLACK_NUMBER_TABLE
 				+ "(_id Integer primary key AUTOINCREMENT,"
 				+ "number char,"
                 + "modify_time DATETIME)");
+		
+		
+		/**
+		db.execSQL("create table "
+				+ TableContanst.DIRTY_DATA
+				+ "(" + TableContanst.DirtyColunms.ID + " Integer primary key AUTOINCREMENT, "
+				+ " " + TableContanst.DirtyColunms.DIRTY_DATA + " char, "
+				+ " " + TableContanst.DirtyColunms.MODIFY_TIME + " DATETIME)");
+		*/
 	}
 
 	@Override

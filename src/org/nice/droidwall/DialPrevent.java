@@ -174,13 +174,13 @@ public class DialPrevent extends ListActivity implements OnClickListener {
 									if (id < 0)
 									{
 										DialPrevent.this.showToast("添加失败！");
-										dao.closeDB();
+										//dao.closeDB();
 									}
 									else
 									{
 										DialPrevent.this.showToast("添加成功！");
 										showListView();
-										dao.closeDB();
+										//dao.closeDB();
 									}
 								}
 						}

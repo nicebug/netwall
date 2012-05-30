@@ -693,7 +693,8 @@ public final class Api {
 			}
 			applications = new DroidApp[map.size()];
 			int index = 0;
-			for (DroidApp application : map.values()) applications[index++] = application;
+			for (DroidApp application : map.values()) 
+				applications[index++] = application;
 			return applications;
 		} catch (Exception e) {
 			alert(ctx, "error: " + e);
