@@ -1,5 +1,7 @@
 netwall
 =======
-Android Firewall based on iptables.Refer to droidwall
+Android Firewall based on iptables.
 
-use svn2github to move this project from code.google.com of netwall to github of netwall
+netwall google code url is https://code.google.com/p/netwall/
+
+Refer to droidwall
